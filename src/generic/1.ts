@@ -1,16 +1,10 @@
-type Errors = {
-  email?: string[];
-  firstName?: string[];
-  lastName?: string[];
-  phone?: string[];
-};
+import axios from "axios";
 
-type Form = {
-  email: string | null;
-  firstName: string | null;
-  lastName: string | null;
-  phone: string | null;
-  errors: Errors;
-};
-
-type Params = Omit<Form, "errors">;
+async function fetchData<T>(url: string): Promise<T> {
+  try {
+    const response = await axios.get<T>(url);
+    return response.data;
+  } catch (error) {
+    throw new Error(`Error fetching from ${url}: ${error}`);
+  }
+}
